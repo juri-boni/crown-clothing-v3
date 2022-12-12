@@ -5,7 +5,6 @@ import {
   signInWithRedirect,
   signInWithPopup,
   GoogleAuthProvider,
-  ProviderId,
 } from "firebase/auth";
 
 import {
@@ -37,6 +36,9 @@ googleProvider.setCustomParameters({
 export const auth = getAuth();
 export const signInWithGooglePopup = () =>
   signInWithPopup(auth, googleProvider);
+
+export const signInWithGoogleRedirect = () =>
+  signInWithRedirect(auth, googleProvider);
 
 //FIRESTORE
 
