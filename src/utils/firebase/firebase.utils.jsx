@@ -100,6 +100,15 @@ export const signInAuthUserWithEmailAndPassword = async (email, password) => {
 //SIGN OUT
 export const signOutUser = () => signOut(auth);
 
-//OBSERVER LISTENER
+//OBSERVER LISTENER -->  [listener: 3 methods (next - error - complete)]
+
 export const onAuthStateChangedListener = (callback) =>
   onAuthStateChanged(auth, callback);
+
+/**
+ * {
+ * next: callback
+ * }
+ *
+ *
+ */
