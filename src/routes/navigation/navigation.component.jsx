@@ -3,6 +3,7 @@ import { Outlet, Link } from "react-router-dom";
 
 import { ReactComponent as CrwnLogo } from "../../assets/crown.svg";
 import { UserContext } from "../../contexts/user.context";
+import CartIcon from "../../assets/cart-icon/cart-icon.component";
 
 import { signOutUser } from "../../utils/firebase/firebase.utils";
 
@@ -30,6 +31,7 @@ const Navigation = () => {
               SIGN IN
             </Link>
           )}
+          <CartIcon></CartIcon>
         </div>
       </div>
       <Outlet />
