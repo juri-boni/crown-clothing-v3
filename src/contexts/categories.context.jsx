@@ -1,20 +1,15 @@
 import { useState, useEffect, createContext } from "react";
 
-import {
-  addCollectionAndDocuments,
-  getCategoriesAndDocuments,
-} from "../utils/firebase/firebase.utils";
+import { getCategoriesAndDocuments } from "../utils/firebase/firebase.utils";
 
 // import SHOP_DATA from "../shop-data";
 
-export const ProductsContext = createContext({
-  products: [],
-  setProducts: () => {},
+export const CategoriesContext = createContext({
+  categoriesMap: {},
 });
 
-export const ProductsProvider = ({ children }) => {
-  const [products, setProducts] = useState([]);
-  const value = { products };
+export const CategoriesProvider = ({ children }) => {
+  const [categoriesMap, setCategoriesMap] = useState({});
 
   //useEffect to set the initial categories values in firestore
   // useEffect(() => {
@@ -25,13 +20,16 @@ export const ProductsProvider = ({ children }) => {
     const getCategoriesMap = async (collectionName) => {
       const categoryMap = await getCategoriesAndDocuments(collectionName);
       // console.log(categoryMap);
+      setCategoriesMap(categoryMap);
     };
     getCategoriesMap("categories");
   }, []);
 
+  const value = { categoriesMap };
+
   return (
-    <ProductsContext.Provider value={value}>
+    <CategoriesContext.Provider value={value}>
       {children}
-    </ProductsContext.Provider>
+    </CategoriesContext.Provider>
   );
 };
