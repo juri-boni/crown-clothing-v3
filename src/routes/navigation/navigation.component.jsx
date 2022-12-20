@@ -7,6 +7,7 @@ import { CartContext } from "../../contexts/cart.context";
 
 import CartIcon from "../../components/cart-icon/cart-icon.component";
 import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component";
+import UserName from "../../components/user-name/user-name.component";
 
 import { signOutUser } from "../../utils/firebase/firebase.utils";
 
@@ -22,6 +23,9 @@ const Navigation = () => {
         <Link className="logo-container" to="/">
           <CrwnLogo className="logo" />
         </Link>
+        <div className="user-name">
+          <UserName />
+        </div>
         <div className="nav-links-container">
           <Link className="nav-link" to="/shop">
             SHOP
