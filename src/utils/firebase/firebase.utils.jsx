@@ -16,6 +16,9 @@ import {
   doc, //to retrieve documents instance from firestore
   getDoc, //to get documents data
   setDoc, //to set documents data
+  collection, //to get a collection reference
+  writeBatch, //to batch objects in a collection
+  query,
 } from "firebase/firestore";
 
 // Your web app's Firebase configuration
@@ -50,6 +53,24 @@ export const signInWithGoogleRedirect = () =>
 //FIRESTORE
 
 export const db = getFirestore();
+
+//CREATING COLLECTIONS:
+
+export const addCollectionAndDocuments = async (
+  collectionKey,
+  objectsToAdd
+) => {
+  const collectionRef = collection(db, collectionKey); // (if it doesn't exist, firebase will create it automatically)
+  //TRANSACTION (successfull unit of work to a database)
+  const batch = writeBatch(db);
+  //attach CRUD to batch
+  objectsToAdd.forEach((object) => {
+    const docRef = doc(collectionRef, object.title.toLowerCase());
+    batch.set(docRef, object);
+  });
+  await batch.commit();
+};
+
 //CREATING USERS
 
 export const createUserDocumentFromAuth = async (
