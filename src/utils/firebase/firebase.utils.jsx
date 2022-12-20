@@ -1,4 +1,3 @@
-import { queries } from "@testing-library/react";
 import { initializeApp } from "firebase/app";
 
 import {
@@ -76,8 +75,9 @@ export const addCollectionAndDocuments = async (
 
 //RETRIEVING COLLECTIONS AND DOCUMENTS
 
-export const getCategoriesAndDocuments = async () => {
-  const collectionRef = collection(db, "categories");
+//getting categories collection
+export const getCategoriesAndDocuments = async (collectionName) => {
+  const collectionRef = collection(db, collectionName);
   const q = query(collectionRef);
 
   const querySnapshot = await getDocs(q);
@@ -90,6 +90,21 @@ export const getCategoriesAndDocuments = async () => {
   return categoryMap;
 };
 
+//getting user collection
+export const getUserDataFromFirestore = async (user) => {
+  if (!user) return;
+  const docRef = doc(db, "users", user.uid);
+  // console.log(user.uid);
+
+  try {
+    const docSnap = await getDoc(docRef);
+    if (!docSnap.exists()) return;
+    return docSnap.data();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 //CREATING USERS
 
 export const createUserDocumentFromAuth = async (
@@ -97,7 +112,7 @@ export const createUserDocumentFromAuth = async (
   additionalInfo = {}
 ) => {
   const userDocRef = doc(db, "users", userAuth.uid);
-  console.log(userDocRef);
+  // console.log(userDocRef);
 
   const userSnapshot = await getDoc(userDocRef);
 

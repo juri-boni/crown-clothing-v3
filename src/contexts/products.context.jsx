@@ -22,11 +22,11 @@ export const ProductsProvider = ({ children }) => {
   // }, []);
 
   useEffect(() => {
-    const getCategoriesMap = async () => {
-      const categoryMap = await getCategoriesAndDocuments();
-      console.log(categoryMap);
+    const getCategoriesMap = async (collectionName) => {
+      const categoryMap = await getCategoriesAndDocuments(collectionName);
+      // console.log(categoryMap);
     };
-    getCategoriesMap();
+    getCategoriesMap("categories");
   }, []);
 
   return (
