@@ -1,3 +1,4 @@
+import { queries } from "@testing-library/react";
 import { initializeApp } from "firebase/app";
 
 import {
@@ -14,11 +15,12 @@ import {
 import {
   getFirestore,
   doc, //to retrieve documents instance from firestore
-  getDoc, //to get documents data
-  setDoc, //to set documents data
+  getDoc, //getDoc() query gets data of a specific document from collection based on references mentioned in the doc() method
+  setDoc, //to set documents
   collection, //to get a collection reference
   writeBatch, //to batch objects in a collection
   query,
+  getDocs, //getDocs() gets data from collection based references mentioned in the doc() method
 } from "firebase/firestore";
 
 // Your web app's Firebase configuration
@@ -69,6 +71,23 @@ export const addCollectionAndDocuments = async (
     batch.set(docRef, object);
   });
   await batch.commit();
+  console.log("done");
+};
+
+//RETRIEVING COLLECTIONS AND DOCUMENTS
+
+export const getCategoriesAndDocuments = async () => {
+  const collectionRef = collection(db, "categories");
+  const q = query(collectionRef);
+
+  const querySnapshot = await getDocs(q);
+  const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+    const { title, items } = docSnapshot.data();
+    acc[title.toLowerCase()] = items;
+    return acc;
+  }, {});
+
+  return categoryMap;
 };
 
 //CREATING USERS
@@ -81,8 +100,6 @@ export const createUserDocumentFromAuth = async (
   console.log(userDocRef);
 
   const userSnapshot = await getDoc(userDocRef);
-  console.log(userSnapshot);
-  console.log(userSnapshot.exists());
 
   // check if user data exists:
   // if not: create/set document with data from userAuth in the db collection
@@ -98,7 +115,7 @@ export const createUserDocumentFromAuth = async (
         ...additionalInfo,
       });
     } catch (err) {
-      console.log("error creating the user", err.message);
+      console.error("error creating the user", err.message);
     }
   }
 
