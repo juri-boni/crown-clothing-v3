@@ -1,10 +1,11 @@
 import { createContext, useEffect, useReducer } from "react";
 
+import { createAction } from "../utils/reducers/reducers.utils";
+
 import {
   onAuthStateChangedListener,
   createUserDocumentFromAuth,
   getUserDataFromFirestore,
-  // signOutUser,
 } from "../utils/firebase/firebase.utils";
 
 export const UserContext = createContext({
@@ -23,8 +24,8 @@ export const USER_ACTION_TYPES = {
 };
 
 const userReducer = (state, action) => {
-  console.log("dispatched");
-  console.log(action);
+  // console.log("dispatched");
+  // console.log(action);
   const { type, payload } = action;
 
   switch (type) {
@@ -50,8 +51,6 @@ const INITIAL_STATE = {
 };
 
 export const UserProvider = ({ children }) => {
-  // const [currentUser, setCurrentUser] = useState(null);
-  // const [userName, setUserName] = useState("");
   const [state, dispatch] = useReducer(userReducer, INITIAL_STATE);
   const { currentUser, userName } = state;
 
@@ -60,12 +59,10 @@ export const UserProvider = ({ children }) => {
   };
 
   const setUserName = (userName) => {
-    dispatch({ type: USER_ACTION_TYPES.SET_USER_NAME, payload: userName });
+    dispatch(createAction(USER_ACTION_TYPES.SET_USER_NAME, userName));
   };
 
   const value = { currentUser, setCurrentUser, userName };
-  console.log(currentUser);
-  console.log(`User Name: ${userName}`);
 
   useEffect(() => {
     const getUserData = async (user) => {
