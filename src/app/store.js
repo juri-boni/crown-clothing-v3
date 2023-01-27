@@ -6,7 +6,7 @@ import {
 
 import logger from "redux-logger";
 
-import { rootReducer } from "./root-Reducer";
+import { rootReducer } from "./root-reducer";
 
 const middlewares = [logger];
 
