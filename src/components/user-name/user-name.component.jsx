@@ -1,6 +1,4 @@
-import { useContext } from "react";
 import { useSelector } from "react-redux";
-import { UserContext } from "../../contexts/user.context";
 import { selectUserName } from "../../app/user/user.selector";
 
 const UserName = () => {
