@@ -1,8 +1,10 @@
 import { useContext } from "react";
+import { useSelector } from "react-redux";
 import { UserContext } from "../../contexts/user.context";
+import { selectUserName } from "../../app/user/user.selector";
 
 const UserName = () => {
-  const { userName } = useContext(UserContext);
+  const userName = useSelector(selectUserName);
 
   return (
     <div className="user-name-container">

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Routes, Route } from "react-router-dom";
 
 import Navigation from "./routes/navigation/navigation.component";
@@ -10,15 +10,17 @@ import Shop from "./routes/shop/shop.component";
 import Checkout from "./routes/checkout/checkout.component";
 
 import {
-  // getUserDataFromFirestore,
+  getUserDataFromFirestore,
   onAuthStateChangedListener,
   createUserDocumentFromAuth,
 } from "./utils/firebase/firebase.utils";
 
-import { setCurrentUser } from "./app/user/user.action";
+import { setCurrentUser, setUserName } from "./app/user/user.action";
+import { selectCurrentUser } from "./app/user/user.selector";
 
 const App = () => {
   const dispatch = useDispatch();
+  const currentUser = useSelector(selectCurrentUser);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChangedListener((user) => {
@@ -30,14 +32,14 @@ const App = () => {
     return unsubscribe;
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   const getUserData = async (user) => {
-  //     const userData = await getUserDataFromFirestore(user);
-  //     const fullName = userData?.displayName;
-  //     setUserName(fullName);
-  //   };
-  //   getUserData(currentUser);
-  // }, [currentUser]);
+  useEffect(() => {
+    const getUserData = async (user) => {
+      const userData = await getUserDataFromFirestore(user);
+      const fullName = userData?.displayName;
+      dispatch(setUserName(fullName));
+    };
+    getUserData(currentUser);
+  }, [currentUser]);
 
   return (
     <Routes>
