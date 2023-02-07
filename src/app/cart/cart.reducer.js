@@ -7,7 +7,7 @@ const INITIAL_STATE = {
   cartTotal: 0,
 };
 
-const cartReducer = (state, action) => {
+export const cartReducer = (state = INITIAL_STATE, action = {}) => {
   const { type, payload } = action;
   switch (type) {
     case CART_ACTION_TYPES.SET_IS_CART_OPEN:
@@ -22,6 +22,6 @@ const cartReducer = (state, action) => {
       };
 
     default:
-      throw new Error(`Unhandled type ${type} in cartReducer`);
+      return state;
   }
 };
