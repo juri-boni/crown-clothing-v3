@@ -4,9 +4,12 @@ import {
   applyMiddleware,
 } from "redux";
 
+import { persistStore, persistReducer } from "redux-persist";
+
 import logger from "redux-logger";
 
 import { rootReducer } from "./root-reducer";
+import storage from "redux-persist/lib/storage";
 
 // const loggerMiddleware = (store) => (next) => (action) => {
 //   if (!action.type) {
@@ -21,6 +24,12 @@ import { rootReducer } from "./root-reducer";
 
 //   console.log("next state", store.getState());
 // };
+
+const persistConfig = {
+  key: "root",
+  storage,
+  whitelist: ["cart"],
+};
 
 const middlewares = [logger];
 
