@@ -5,8 +5,8 @@ import {
 } from "redux";
 
 import { persistStore, persistReducer } from "redux-persist";
-
 import logger from "redux-logger";
+import thunk from "redux-thunk";
 
 import { rootReducer } from "./root-reducer";
 import storage from "redux-persist/lib/storage";
@@ -19,9 +19,10 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const middlewares = [process.env.NODE_ENV === "development" && logger].filter(
-  Boolean
-);
+const middlewares = [
+  process.env.NODE_ENV === "development" && logger,
+  thunk,
+].filter(Boolean);
 
 const composeEnhancer =
   (process.env.NODE_ENV !== "production" &&
