@@ -11,8 +11,6 @@ import logger from "redux-logger";
 import { rootReducer } from "./root-reducer";
 import storage from "redux-persist/lib/storage";
 
-
-
 const persistConfig = {
   key: "root",
   storage,
@@ -21,7 +19,9 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const middlewares = [logger];
+const middlewares = [process.env.NODE_ENV === "development" && logger].filter(
+  Boolean
+);
 
 const composedEnhancers = compose(applyMiddleware(...middlewares));
 
