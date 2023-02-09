@@ -31,8 +31,16 @@ const persistConfig = {
   whitelist: ["cart"],
 };
 
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
 const middlewares = [logger];
 
 const composedEnhancers = compose(applyMiddleware(...middlewares));
 
-export const store = createStore(rootReducer, undefined, composedEnhancers);
+export const store = createStore(
+  persistedReducer,
+  undefined,
+  composedEnhancers
+);
+
+export const persistor = persistStore(store);
