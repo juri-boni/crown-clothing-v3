@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { USER_ACTION_TYPES } from "./user.types";
 
 const USER_INITIAL_STATE = {
   currentUser: null,
@@ -12,11 +11,14 @@ export const userSlice = createSlice({
   reducers: {
     setCurrentUser(state, action) {
       state.currentUser = action.payload;
-      state.setUserName = action.payload;
+    },
+    setUserName(state, action) {
+      state.userName = action.payload;
     },
   },
 });
 
-export const { setCurrentUser, setUserName } = userSlice.actions;
+export const { setCurrentUser } = userSlice.actions;
+export const { setUserName } = userSlice.actions;
 
 export const userReducer = userSlice.reducer;

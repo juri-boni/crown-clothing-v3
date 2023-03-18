@@ -5,7 +5,6 @@ import { Routes, Route } from "react-router-dom";
 import Navigation from "./routes/navigation/navigation.component";
 import Home from "./routes/home/home.component";
 import Authentication from "./routes/authentication/authentication.component";
-
 import Shop from "./routes/shop/shop.component";
 import Checkout from "./routes/checkout/checkout.component";
 
@@ -15,7 +14,7 @@ import {
   createUserDocumentFromAuth,
 } from "./utils/firebase/firebase.utils";
 
-import { setCurrentUser, setUserName } from "./app/user/user.action";
+import { setCurrentUser, setUserName } from "./app/user/user.reducer";
 import { selectCurrentUser } from "./app/user/user.selector";
 
 const App = () => {
@@ -27,6 +26,7 @@ const App = () => {
       if (user) {
         createUserDocumentFromAuth(user);
       }
+      console.log(setCurrentUser(user));
       dispatch(setCurrentUser(user));
     });
     return unsubscribe;
