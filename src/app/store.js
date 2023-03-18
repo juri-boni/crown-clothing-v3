@@ -2,7 +2,7 @@
 //REDUX WITH TOOLKIT
 /******************************************************************************* */
 
-import { configureStore } from "@reactjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import logger from "redux-logger";
 import { rootReducer } from "./root-reducer";
 
