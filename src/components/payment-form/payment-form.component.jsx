@@ -67,7 +67,7 @@ const PaymentForm = () => {
         <h2>Credit Card Payment:</h2>
         <CardElement />
         <Button
-          disabled={isProcessingPayment}
+          isLoading={isProcessingPayment}
           buttonType={BUTTON_TYPE_CLASSES.inverted}
         >
           Pay Now
